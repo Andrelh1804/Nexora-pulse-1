@@ -1,0 +1,8 @@
+{
+  "name": "Nexora Pulse",
+  "description": "Nexora Pulse - Soluções digitais com foco em resultados reais. Plataforma SaaS inteligente integrada com automação, tráfego pago, CRM, IA e performance.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
