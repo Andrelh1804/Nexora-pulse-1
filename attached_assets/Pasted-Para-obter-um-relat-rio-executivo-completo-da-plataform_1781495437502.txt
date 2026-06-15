@@ -1,0 +1,382 @@
+Para obter um relatório executivo completo da plataforma **Nexora Pulse** e permitir que qualquer equipe de IA, desenvolvedor, arquiteto de software ou gestor continue o desenvolvimento sem perda de contexto, utilize o seguinte Prompt Mestre:
+
+# PROMPT MASTER — RELATÓRIO COMPLETO DE DESENVOLVIMENTO DA PLATAFORMA NEXORA PULSE
+
+Atue como um Comitê Executivo composto por:
+
+* CTO (Chief Technology Officer)
+* CIO (Chief Information Officer)
+* Arquiteto de Software Principal
+* Especialista DevOps e Cloud
+* Especialista Cyber Security
+* Product Manager Sênior
+* UX/UI Lead Designer
+* Engenheiro Full Stack Sênior
+* Especialista Mobile Android/iOS
+* Especialista IA Generativa e Machine Learning
+* Analista de QA e Testes
+* Especialista LGPD e Compliance
+* Especialista FinOps
+* Especialista Growth e Escalabilidade SaaS
+
+Sua missão é realizar uma auditoria completa da plataforma Nexora Pulse e gerar um relatório técnico executivo detalhado contendo todo o estado atual do projeto, identificando o que já foi desenvolvido, o que está parcialmente concluído e o que ainda precisa ser implementado.
+
+---
+
+# OBJETIVO PRINCIPAL
+
+Criar um documento de continuidade de desenvolvimento que permita que qualquer equipe técnica assuma imediatamente o projeto sem necessidade de contexto adicional.
+
+---
+
+# SEÇÃO 1 — VISÃO GERAL DO PROJETO
+
+Apresente:
+
+* Nome oficial do projeto
+* Objetivo da plataforma
+* Público-alvo
+* Problemas que resolve
+* Diferenciais competitivos
+* Proposta de valor
+* Roadmap estratégico
+
+---
+
+# SEÇÃO 2 — ARQUITETURA GLOBAL
+
+Mapear integralmente:
+
+## Frontend
+
+* Framework utilizado
+* Estrutura de componentes
+* Design System
+* Responsividade
+* Temas
+* Performance
+
+## Backend
+
+* Linguagem
+* Framework
+* APIs
+* Serviços
+* Microserviços
+
+## Banco de Dados
+
+* Estrutura completa
+* Relacionamentos
+* Índices
+* Políticas de acesso
+
+## Infraestrutura
+
+* Cloud Provider
+* Containers
+* Kubernetes
+* CDN
+* Cache
+* Balanceamento
+
+---
+
+# SEÇÃO 3 — MAPEAMENTO COMPLETO DOS MÓDULOS
+
+Listar todos os módulos existentes.
+
+Para cada módulo apresentar:
+
+## Nome
+
+## Objetivo
+
+## Funcionalidades
+
+## Status
+
+* Não iniciado
+* Em desenvolvimento
+* Parcialmente concluído
+* Concluído
+* Em produção
+
+## Dependências
+
+## Pendências
+
+## Riscos
+
+---
+
+# SEÇÃO 4 — MÓDULO DE AUTENTICAÇÃO
+
+Auditar:
+
+* Login
+* Cadastro
+* Recuperação de senha
+* MFA
+* OAuth
+* SSO
+* Controle de Sessão
+* Tokens
+* Segurança
+
+---
+
+# SEÇÃO 5 — DASHBOARD PRINCIPAL
+
+Documentar:
+
+* Widgets
+* Indicadores
+* KPIs
+* Métricas
+* Gráficos
+* Atualizações em tempo real
+
+---
+
+# SEÇÃO 6 — MÓDULO DE IA
+
+Identificar:
+
+## Motores IA
+
+* GPT
+* Claude
+* Gemini
+* DeepSeek
+* Modelos locais
+
+## Funções
+
+* Chat IA
+* Assistente virtual
+* Análises
+* Automações
+* Agentes autônomos
+
+## Arquitetura
+
+* Prompt Engine
+* RAG
+* Vetorização
+* Embeddings
+* Memória contextual
+
+---
+
+# SEÇÃO 7 — MÓDULO DE AUTOMAÇÃO
+
+Mapear:
+
+* Fluxos
+* Triggers
+* Eventos
+* Integrações
+* Workflows
+
+Identificar gargalos.
+
+---
+
+# SEÇÃO 8 — MÓDULO DE ANALYTICS
+
+Documentar:
+
+* KPIs
+* Métricas
+* BI
+* Dashboards
+* Indicadores preditivos
+
+---
+
+# SEÇÃO 9 — SEGURANÇA
+
+Executar auditoria completa.
+
+Avaliar:
+
+* OWASP Top 10
+* Criptografia
+* MFA
+* JWT
+* LGPD
+* Controle de acesso
+* Logs
+* Auditoria
+
+Classificar:
+
+* Crítico
+* Alto
+* Médio
+* Baixo
+
+---
+
+# SEÇÃO 10 — EXPERIÊNCIA DO USUÁRIO
+
+Analisar:
+
+* UX
+* UI
+* Navegação
+* Onboarding
+* Retenção
+* Conversão
+
+Propor melhorias.
+
+---
+
+# SEÇÃO 11 — MOBILE
+
+Mapear:
+
+* Android
+* iOS
+* Flutter
+* React Native
+
+Verificar:
+
+* Compatibilidade
+* Performance
+* Offline Mode
+* Push Notifications
+
+---
+
+# SEÇÃO 12 — BANCO DE DADOS
+
+Gerar:
+
+## Inventário Completo
+
+* Tabelas
+* Views
+* Triggers
+* Functions
+* Policies
+* Buckets
+
+## Melhorias recomendadas
+
+---
+
+# SEÇÃO 13 — DEVOPS
+
+Mapear:
+
+* CI/CD
+* Pipelines
+* Deploy
+* Backup
+* Monitoramento
+* Observabilidade
+
+Ferramentas utilizadas.
+
+---
+
+# SEÇÃO 14 — TESTES
+
+Apresentar cobertura:
+
+* Unitários
+* Integração
+* E2E
+* Performance
+* Segurança
+
+Indicar percentual de cobertura.
+
+---
+
+# SEÇÃO 15 — FINOPS
+
+Calcular:
+
+* Custos atuais
+* Custos projetados
+* Consumo Cloud
+* IA
+* Banco de dados
+* CDN
+
+Otimizações possíveis.
+
+---
+
+# SEÇÃO 16 — MATRIZ DE PENDÊNCIAS
+
+Criar tabela contendo:
+
+| Item | Prioridade | Impacto | Complexidade | Status |
+| ---- | ---------- | ------- | ------------ | ------ |
+
+---
+
+# SEÇÃO 17 — ROADMAP DE CONTINUIDADE
+
+Dividir em:
+
+## Sprint 1
+
+Funcionalidades críticas.
+
+## Sprint 2
+
+Funcionalidades importantes.
+
+## Sprint 3
+
+Otimizações.
+
+## Sprint 4
+
+Escalabilidade.
+
+---
+
+# SEÇÃO 18 — RELATÓRIO EXECUTIVO FINAL
+
+Apresentar:
+
+* Percentual geral de conclusão
+* Maturidade do projeto
+* Nível de segurança
+* Nível de escalabilidade
+* Nível de prontidão para produção
+
+Classificação final:
+
+🔴 MVP Inicial
+
+🟠 Beta
+
+🟡 Release Candidate
+
+🟢 Produção
+
+---
+
+# ENTREGA OBRIGATÓRIA
+
+Ao final gerar:
+
+1. Diagnóstico Executivo Completo.
+2. Inventário Técnico Completo.
+3. Backlog Priorizado.
+4. Roadmap de Continuidade.
+5. Plano de Escalabilidade.
+6. Plano de Segurança.
+7. Plano de Go-Live.
+8. Próximos passos detalhados para continuidade integral do desenvolvimento da plataforma Nexora Pulse.
+
+Esse prompt é adequado para gerar um relatório de continuidade de nível corporativo, servindo como documento mestre para desenvolvimento, auditoria, migração de equipe, captação de investimento e planejamento de roadmap da Nexora Pulse.

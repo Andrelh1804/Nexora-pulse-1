@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "Vx7CmOPWPZ_I8Co2fOI0I"
+uri = "file://NEXORA_PULSE_EXECUTIVE_REPORT.md"
+type = "text"
+title = "Nexora Pulse — Relatório Executivo Completo"
