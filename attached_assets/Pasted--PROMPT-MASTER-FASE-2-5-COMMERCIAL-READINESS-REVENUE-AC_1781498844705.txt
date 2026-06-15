@@ -1,0 +1,269 @@
+# PROMPT MASTER — FASE 2.5 COMMERCIAL READINESS & REVENUE ACTIVATION
+
+Assuma a continuidade do projeto Nexora Pulse.
+
+O sistema já possui:
+
+* PostgreSQL
+* JWT
+* Refresh Tokens
+* RBAC
+* Multi-Tenant
+* API Gateway
+* DDD
+* Event Bus
+* Audit Logs
+* Feature Flags
+* Notification Engine
+* IA com Memória Persistente
+* React Router
+* Testes Automatizados
+
+O objetivo desta fase é preparar a plataforma para receber clientes pagantes.
+
+---
+
+# BLOCO 1 — BILLING COMPLETO
+
+Implementar Stripe Production.
+
+Criar:
+
+## Checkout
+
+* Plano Starter
+* Plano Pro
+* Plano Enterprise
+
+## Assinaturas
+
+* Trial
+* Upgrade
+* Downgrade
+* Cancelamento
+* Reativação
+
+## Portal do Cliente
+
+* Faturas
+* Cartões
+* Histórico
+* Cobranças
+
+---
+
+# BLOCO 2 — LIMITES DE CONSUMO
+
+Criar Usage Engine.
+
+Controlar:
+
+* Chamadas IA
+* Leads
+* Campanhas
+* Usuários
+* Workflows
+* Espaço de armazenamento
+
+Bloqueio automático por plano.
+
+---
+
+# BLOCO 3 — APP.TSX ELIMINATION
+
+Remover definitivamente o monólito.
+
+Meta:
+
+App.tsx inferior a 300 linhas.
+
+Separar:
+
+* Dashboard
+* CRM
+* Analytics
+* IA
+* Social
+* Billing
+* Configurações
+
+Utilizar:
+
+* React Context
+* Hooks
+* Repository Pattern
+
+Eliminar prop drilling.
+
+---
+
+# BLOCO 4 — DASHBOARD COM DADOS REAIS
+
+Substituir todos os mocks.
+
+Conectar:
+
+* PostgreSQL
+* APIs externas
+
+Todos os widgets devem consumir dados reais.
+
+Nenhuma métrica simulada deve permanecer.
+
+---
+
+# BLOCO 5 — BILLING DASHBOARD
+
+Criar módulo financeiro.
+
+Exibir:
+
+* Plano atual
+* Próxima cobrança
+* Consumo IA
+* Limites
+* Upgrade
+
+---
+
+# BLOCO 6 — CUSTOMER ONBOARDING
+
+Criar onboarding guiado.
+
+Etapa 1
+
+Cadastro
+
+Etapa 2
+
+Configuração da empresa
+
+Etapa 3
+
+Conectar Meta
+
+Etapa 4
+
+Conectar Google
+
+Etapa 5
+
+Conectar WhatsApp
+
+Etapa 6
+
+Primeira campanha
+
+Etapa 7
+
+Primeira análise IA
+
+---
+
+# BLOCO 7 — META ADS PRODUÇÃO
+
+Implementar:
+
+* OAuth
+* Accounts
+* Campaigns
+* Insights
+* Pixels
+
+Criar sincronização automática.
+
+---
+
+# BLOCO 8 — GOOGLE ADS PRODUÇÃO
+
+Implementar:
+
+* OAuth
+* Customer Accounts
+* Campaign Sync
+* Conversões
+
+---
+
+# BLOCO 9 — WHATSAPP PRODUÇÃO
+
+Implementar:
+
+* QR Code
+* Instâncias
+* Mensagens
+* Histórico
+
+Persistência completa.
+
+---
+
+# BLOCO 10 — DESIGN STUDIO REAL
+
+Implementar:
+
+* Gemini Vision
+* Imagen
+* Upload
+* Biblioteca de Criativos
+
+Eliminar simulações.
+
+---
+
+# BLOCO 11 — ANALYTICS AVANÇADO
+
+Implementar:
+
+* Recharts
+* Séries Temporais
+* Comparativos
+* Forecast
+
+Criar gráficos reais.
+
+---
+
+# BLOCO 12 — GO LIVE
+
+Executar auditoria final.
+
+Validar:
+
+□ Stripe
+□ Auth
+□ PostgreSQL
+□ RBAC
+□ Meta Ads
+□ Google Ads
+□ WhatsApp
+□ IA
+□ Logs
+□ LGPD
+□ Backup
+
+---
+
+# RESULTADO ESPERADO
+
+Ao final da fase:
+
+✅ Plataforma comercializável
+
+✅ Assinaturas reais
+
+✅ Clientes reais
+
+✅ Dados reais
+
+✅ Receita ativa
+
+✅ Release Candidate
+
+Meta final:
+
+85% a 90% de maturidade do produto.
+
+Classificação:
+
+🟡 RELEASE CANDIDATE

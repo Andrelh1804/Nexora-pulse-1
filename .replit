@@ -42,3 +42,10 @@ externalPort = 3000
 deploymentTarget = "autoscale"
 run = ["node", "dist/server.cjs"]
 build = ["npm", "run", "build"]
+
+[userenv]
+
+[userenv.shared]
+NODE_ENV = "development"
+JWT_SECRET = "1419afd5af655e482ad9882a17d7049f761af2ea0a64d97cd2778625eb3774dbc8a934532ed4900e6ef24047ebbc497431c30d538d86d8c09e3868821348f3f3"
+JWT_REFRESH_SECRET = "3cb3ef1cea7ba2a2ae95d0ec91632ca906d1e94f6026429404da11f95ad6cfc0125d33dd0f3bab1f6e49335d6bb0e6aaf3b282b870262001acfbfa4f5208d90b"
