@@ -84,10 +84,12 @@ router.post("/", async (req: AuthRequest, res: Response) => {
   try {
     const body = createLeadSchema.parse(req.body);
     const lead = await queryOne(
-      `INSERT INTO leads (tenant_id, name, email, phone, status, value, source, notes, tags, campaign_id, assigned_to)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *`,
-      [req.user!.tenantId, body.name, body.email ?? null, body.phone ?? null, body.status,
-       body.value, body.source ?? null, body.notes ?? null, body.tags, body.campaign_id ?? null, req.user!.sub]
+      `INSERT INTO leads (tenant_id, name, email, phone, company, status, value, source, notes, tags, campaign_id, assigned_to)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *`,
+      [req.user!.tenantId, body.name, body.email ?? null, body.phone ?? null,
+       (body as Record<string, unknown>).company ?? null,
+       body.status, body.value, body.source ?? null, body.notes ?? null, body.tags,
+       body.campaign_id ?? null, req.user!.sub]
     );
 
     auditLogger.log({

@@ -11,8 +11,11 @@ import campaignsRoutes from "./src/routes/campaigns.routes";
 import leadsRoutes from "./src/routes/leads.routes";
 import tenantRoutes from "./src/routes/tenants.routes";
 import observabilityRoutes from "./src/routes/observability.routes";
+import billingRoutes from "./src/routes/billing.routes";
+import socialRoutes from "./src/routes/social.routes";
 import { checkConnection } from "./src/lib/db";
-import { saveInteraction, getMemoryContext } from "./src/services/ai-memory.service";
+import { saveInteraction, getMemoryContext, getUsageStats } from "./src/services/ai-memory.service";
+import { authenticate, AuthRequest } from "./src/middleware/auth.middleware";
 
 dotenv.config();
 
@@ -140,6 +143,19 @@ router.use("/leads", leadsRoutes);
 
 // ── OBSERVABILITY ROUTES ─────────────────────
 router.use("/ops", observabilityRoutes);
+
+// ── BILLING ROUTES ────────────────────────────
+router.use("/billing", billingRoutes);
+
+// ── SOCIAL ROUTES ─────────────────────────────
+router.use("/social", socialRoutes);
+
+// ── AI USAGE ──────────────────────────────────
+router.get("/ai/usage", authenticate, async (req: Request, res: Response) => {
+  const authReq = req as AuthRequest;
+  const stats = await getUsageStats(authReq.user!.tenantId);
+  return res.json(stats);
+});
 
 // ── HEALTH CHECK ─────────────────────────────
 router.get("/health", async (_req: Request, res: Response) => {

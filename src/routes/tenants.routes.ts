@@ -155,4 +155,28 @@ router.get("/stats", async (req: AuthRequest, res: Response) => {
   });
 });
 
+// PATCH /api/v1/tenant/users/me — update own profile
+router.patch("/users/me", async (req: AuthRequest, res: Response) => {
+  try {
+    const { name, phone } = req.body as { name?: string; phone?: string };
+    const sets: string[] = [];
+    const vals: unknown[] = [];
+    let idx = 2;
+
+    if (name) { sets.push(`name = $${idx++}`); vals.push(name); }
+    if (phone) { sets.push(`phone = $${idx++}`); vals.push(phone); }
+
+    if (sets.length === 0) return res.status(400).json({ error: "Nenhum campo para atualizar." });
+
+    const user = await queryOne(
+      `UPDATE users SET ${sets.join(", ")}, updated_at = NOW() WHERE id = $1 RETURNING id, name, email, role, phone`,
+      [req.user!.sub, ...vals]
+    );
+
+    return res.json({ data: user });
+  } catch {
+    return res.status(500).json({ error: "Erro ao atualizar perfil." });
+  }
+});
+
 export default router;
