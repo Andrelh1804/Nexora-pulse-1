@@ -1,19 +1,25 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
+import { BrowserRouter } from "react-router-dom";
 import "./index.css";
-import { TenantProvider } from "./contexts/TenantContext.tsx";
-import { NotificationProvider } from "./contexts/NotificationContext.tsx";
-import { ThemeProvider } from "./contexts/ThemeContext.tsx";
+import { AuthProvider } from "./contexts/AuthContext";
+import { TenantProvider } from "./contexts/TenantContext";
+import { NotificationProvider } from "./contexts/NotificationContext";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import AppRouter from "./router/AppRouter";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <TenantProvider userId="demo-user-001">
-      <ThemeProvider>
-        <NotificationProvider>
-          <App />
-        </NotificationProvider>
-      </ThemeProvider>
-    </TenantProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <TenantProvider userId="demo-user-001">
+          <ThemeProvider>
+            <NotificationProvider>
+              <AppRouter />
+            </NotificationProvider>
+          </ThemeProvider>
+        </TenantProvider>
+      </AuthProvider>
+    </BrowserRouter>
   </StrictMode>
 );

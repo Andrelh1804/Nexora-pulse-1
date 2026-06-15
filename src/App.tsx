@@ -56,9 +56,15 @@ import NexoraAutomationWorkflows from "./components/NexoraAutomationWorkflows";
 import NexoraLandingPage from "./components/NexoraLandingPage";
 import { Home, ArrowLeft } from "lucide-react";
 
-export default function App() {
+interface AppProps {
+  authUser?: { id: string; email: string; name: string; role: string; plan: string } | null;
+  onNavigate?: (path: string) => void;
+  initialView?: "site" | "app";
+}
+
+export default function App({ authUser, onNavigate, initialView = "site" }: AppProps = {}) {
   // View mode switcher: "site" (Website Institucional) or "app" (Plataforma SaaS)
-  const [viewMode, setViewMode] = useState<"site" | "app">("site");
+  const [viewMode, setViewMode] = useState<"site" | "app">(initialView);
 
   // Navigation State
   const [activeTab, setActiveTab] = useState<

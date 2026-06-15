@@ -6,6 +6,13 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import morgan from "morgan";
+import authRoutes from "./src/routes/auth.routes";
+import campaignsRoutes from "./src/routes/campaigns.routes";
+import leadsRoutes from "./src/routes/leads.routes";
+import tenantRoutes from "./src/routes/tenants.routes";
+import observabilityRoutes from "./src/routes/observability.routes";
+import { checkConnection } from "./src/lib/db";
+import { saveInteraction, getMemoryContext } from "./src/services/ai-memory.service";
 
 dotenv.config();
 
@@ -61,8 +68,16 @@ const aiLimiter = rateLimit({
   message: { error: "Limite de chamadas de IA atingido. Aguarde 1 minuto.", code: "AI_RATE_LIMIT" },
 });
 
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  message: { error: "Muitas tentativas de autenticação. Aguarde 15 minutos.", code: "AUTH_RATE_LIMIT" },
+});
+
 app.use(`${API_PREFIX}/`, globalLimiter);
 app.use(`${API_PREFIX}/ai/`, aiLimiter);
+app.use(`${API_PREFIX}/auth/login`, authLimiter);
+app.use(`${API_PREFIX}/auth/register`, authLimiter);
 
 // ──────────────────────────────────────────────
 // CORS (DEV-FRIENDLY)
@@ -111,38 +126,60 @@ if (apiKey) {
 // ──────────────────────────────────────────────
 const router = express.Router();
 
-// Health check
-router.get("/health", (_req: Request, res: Response) => {
+// ── AUTH ROUTES ──────────────────────────────
+router.use("/auth", authRoutes);
+
+// ── TENANT ROUTES ────────────────────────────
+router.use("/tenant", tenantRoutes);
+
+// ── CAMPAIGNS ROUTES ─────────────────────────
+router.use("/campaigns", campaignsRoutes);
+
+// ── LEADS ROUTES ─────────────────────────────
+router.use("/leads", leadsRoutes);
+
+// ── OBSERVABILITY ROUTES ─────────────────────
+router.use("/ops", observabilityRoutes);
+
+// ── HEALTH CHECK ─────────────────────────────
+router.get("/health", async (_req: Request, res: Response) => {
+  const dbOk = await checkConnection();
   res.json({
     status: "ok",
     version: API_VERSION,
+    stage: "2.0 — Foundation to Production",
     timestamp: new Date().toISOString(),
     uptime: Math.floor(process.uptime()),
     environment: process.env.NODE_ENV ?? "development",
+    services: {
+      database: dbOk ? "connected" : "disconnected",
+      ai: !!ai ? "gemini-2.5-flash" : "simulation",
+    },
     features: {
-      ai: !!ai,
+      auth: true,
+      rbac: true,
+      multiTenant: true,
       rateLimit: true,
       auditLogs: true,
-      multiTenant: true,
+      campaigns: true,
+      leads: true,
     },
   });
 });
 
-// System info
+// ── STATUS ───────────────────────────────────
 router.get("/status", (_req: Request, res: Response) => {
   res.json({
     name: "Nexora Pulse API",
     version: API_VERSION,
-    stage: "1.5 — Enterprise Foundation",
+    stage: "2.0 — Foundation to Production",
     memory: process.memoryUsage(),
     nodeVersion: process.version,
     timestamp: new Date().toISOString(),
   });
 });
 
-// ──────────────────────────────────────────────
-// AI AGENTS ENDPOINT  /api/v1/ai/agent
-// ──────────────────────────────────────────────
+// ── AI AGENTS ENDPOINT  /api/v1/ai/agent ─────
 router.post("/ai/agent", async (req: Request, res: Response) => {
   const { agentType, tenantName, tenantData, userInput } = req.body;
 
@@ -158,41 +195,68 @@ router.post("/ai/agent", async (req: Request, res: Response) => {
     return res.status(400).json({ error: `Tipo de agente inválido: ${agentType}`, code: "INVALID_AGENT_TYPE" });
   }
 
-  const systemInstruction = buildSystemInstruction(agentType, tenantName, tenantData);
+  const tenantId = req.headers["x-tenant-id"] as string ?? "unknown";
+  const memoryCtx = await getMemoryContext(tenantId, agentType, 3);
+  const memoryNote = memoryCtx.recentInteractions.length > 0
+    ? `\n\n[Contexto histórico — últimas ${memoryCtx.recentInteractions.length} interações deste agente com este cliente]\n` +
+      memoryCtx.recentInteractions.map((i, n) => `${n + 1}. Usuário perguntou: "${i.prompt.slice(0, 120)}..."`).join("\n")
+    : "";
+
+  const systemInstruction = buildSystemInstruction(agentType, tenantName, tenantData) + memoryNote;
+  const prompt = userInput ?? "Gere uma sugestão estratégica para otimizar meus resultados este mês.";
+  const startTime = Date.now();
 
   try {
     if (ai) {
       const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
-        contents: userInput ?? "Gere uma sugestão estratégica para otimizar meus resultados este mês.",
+        contents: prompt,
         config: { systemInstruction, temperature: 0.75 },
       });
       const text = response.text ?? "O agente não conseguiu formular uma resposta no momento.";
+      const processingMs = Date.now() - startTime;
+
+      await saveInteraction({
+        tenantId, agentType, prompt,
+        response: text,
+        model: "gemini-2.5-flash",
+        processingMs,
+        isSimulated: false,
+        status: "success",
+      });
+
       return res.json({ result: text, agentType, model: "gemini-2.5-flash", timestamp: new Date().toISOString() });
     } else {
-      return res.json(buildSimulatedResponse(agentType, tenantName, tenantData, userInput));
+      const simulated = buildSimulatedResponse(agentType, tenantName, tenantData, userInput);
+      await saveInteraction({
+        tenantId, agentType, prompt,
+        response: simulated.result,
+        processingMs: Date.now() - startTime,
+        isSimulated: true,
+        status: "success",
+      });
+      return res.json(simulated);
     }
   } catch (error: unknown) {
     console.error("[Nexora API] AI call failed:", error);
+    const simulated = buildSimulatedResponse(agentType, tenantName, tenantData, userInput);
+    await saveInteraction({
+      tenantId, agentType, prompt,
+      response: simulated.result,
+      processingMs: Date.now() - startTime,
+      isSimulated: true,
+      status: "failed",
+      metadata: { error: error instanceof Error ? error.message : "unknown" },
+    });
     return res.status(200).json({
-      ...buildSimulatedResponse(agentType, tenantName, tenantData, userInput),
+      ...simulated,
       fallback: true,
       error: error instanceof Error ? error.message : "AI service temporarily unavailable",
     });
   }
 });
 
-// ──────────────────────────────────────────────
-// LEGACY COMPAT: /api/gemini/agent → /api/v1/ai/agent
-// ──────────────────────────────────────────────
-app.post("/api/gemini/agent", async (req: Request, res: Response) => {
-  req.url = `${API_PREFIX}/ai/agent`;
-  app._router.handle(req, res, () => {});
-});
-
-// ──────────────────────────────────────────────
-// TENANTS ENDPOINT  /api/v1/tenants
-// ──────────────────────────────────────────────
+// ── LEGACY TENANTS LIST ───────────────────────
 router.get("/tenants", (_req: Request, res: Response) => {
   res.json({
     tenants: [
@@ -206,37 +270,22 @@ router.get("/tenants", (_req: Request, res: Response) => {
   });
 });
 
-// ──────────────────────────────────────────────
-// MARKETPLACE ENDPOINT  /api/v1/marketplace
-// ──────────────────────────────────────────────
+// ── MARKETPLACE ───────────────────────────────
 router.get("/marketplace/items", (_req: Request, res: Response) => {
-  res.json({
-    items: [],
-    total: 0,
-    message: "Marketplace API — use client-side domain for in-memory data in dev mode.",
-    timestamp: new Date().toISOString(),
-  });
+  res.json({ items: [], total: 0, timestamp: new Date().toISOString() });
 });
 
-// ──────────────────────────────────────────────
-// FEATURE FLAGS ENDPOINT  /api/v1/features
-// ──────────────────────────────────────────────
+// ── FEATURE FLAGS ─────────────────────────────
 router.get("/features/:plan", (req: Request, res: Response) => {
   const { plan } = req.params;
   const validPlans = ["basic", "premium", "enterprise"];
   if (!validPlans.includes(plan)) {
     return res.status(400).json({ error: "Plano inválido", validPlans });
   }
-  res.json({
-    plan,
-    features: getFeaturesByPlan(plan),
-    timestamp: new Date().toISOString(),
-  });
+  res.json({ plan, features: getFeaturesByPlan(plan), timestamp: new Date().toISOString() });
 });
 
-// ──────────────────────────────────────────────
-// 404 handler for unmatched API routes
-// ──────────────────────────────────────────────
+// ── 404 API handler ───────────────────────────
 router.use((_req: Request, res: Response) => {
   res.status(404).json({
     error: "Rota de API não encontrada",
@@ -248,7 +297,12 @@ router.use((_req: Request, res: Response) => {
 // Mount versioned router
 app.use(API_PREFIX, router);
 
-// Legacy health compat
+// ── LEGACY COMPAT ─────────────────────────────
+app.post("/api/gemini/agent", async (req: Request, res: Response) => {
+  req.url = `${API_PREFIX}/ai/agent`;
+  app._router.handle(req, res, () => {});
+});
+
 app.get("/api/health", (_req: Request, res: Response) => {
   res.json({ status: "ok", time: new Date().toISOString(), version: API_VERSION });
 });
@@ -290,6 +344,7 @@ function buildSimulatedResponse(agentType: string, tenantName: string, tenantDat
   const roas = tenantData?.roas ?? "3.8x";
   const leads = tenantData?.leads ?? "1,240";
   const conversionRate = tenantData?.conversionRate ?? "2.4%";
+  void userInput;
 
   let result = "";
   if (agentType === "social_media") {
@@ -322,7 +377,38 @@ function getFeaturesByPlan(plan: string): Record<string, boolean> {
 // ──────────────────────────────────────────────
 // SERVER START
 // ──────────────────────────────────────────────
+async function seedDemoUser() {
+  try {
+    const { queryOne, query } = await import("./src/lib/db");
+    const { hashPassword } = await import("./src/lib/auth");
+
+    const existing = await queryOne(
+      "SELECT id FROM users WHERE email = $1",
+      ["demo@nexorapulse.com"]
+    );
+    if (!existing) {
+      const hash = await hashPassword("Demo@12345");
+      await query(
+        `INSERT INTO users (tenant_id, email, password_hash, name, role, is_active, is_verified)
+         VALUES ($1, $2, $3, $4, 'admin', TRUE, TRUE)`,
+        ["00000000-0000-0000-0000-000000000004", "demo@nexorapulse.com", hash, "Demo User Nexora"]
+      );
+      console.log("[Nexora API] Demo user seeded: demo@nexorapulse.com / Demo@12345 ✓");
+    }
+  } catch (err) {
+    console.warn("[Nexora API] Could not seed demo user:", err instanceof Error ? err.message : err);
+  }
+}
+
 async function startServer() {
+  const dbOk = await checkConnection();
+  if (dbOk) {
+    console.log("[Nexora API] PostgreSQL connected ✓");
+    await seedDemoUser();
+  } else {
+    console.warn("[Nexora API] PostgreSQL not connected — DB features will be unavailable.");
+  }
+
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
       server: { middlewareMode: true },
@@ -341,9 +427,10 @@ async function startServer() {
 
   app.listen(PORT, "0.0.0.0", () => {
     console.log(`\n🚀 Nexora Pulse API ${API_VERSION} running on http://0.0.0.0:${PORT}`);
-    console.log(`   API Gateway: http://0.0.0.0:${PORT}${API_PREFIX}/health`);
-    console.log(`   AI Endpoint: http://0.0.0.0:${PORT}${API_PREFIX}/ai/agent`);
-    console.log(`   Environment: ${process.env.NODE_ENV ?? "development"}\n`);
+    console.log(`   API Gateway:  http://0.0.0.0:${PORT}${API_PREFIX}/health`);
+    console.log(`   Auth:         http://0.0.0.0:${PORT}${API_PREFIX}/auth/login`);
+    console.log(`   AI Endpoint:  http://0.0.0.0:${PORT}${API_PREFIX}/ai/agent`);
+    console.log(`   Environment:  ${process.env.NODE_ENV ?? "development"}\n`);
   });
 }
 
