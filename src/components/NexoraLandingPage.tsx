@@ -41,7 +41,7 @@ import {
 } from "lucide-react";
 import NexoraLogo from "./NexoraLogo";
 // @ts-ignore
-import nexoraLogoImg from "../assets/images/nexora_logo_full_ultra_hd_1779937872019.png";
+import nexoraLogoImg from "../assets/images/nexora_logo_new.png";
 
 interface NexoraLandingPageProps {
   onAccessApp: () => void;
@@ -474,12 +474,12 @@ export default function NexoraLandingPage({ onAccessApp, addXP }: NexoraLandingP
               </div>
 
               {/* Botão overlay flutuante (ícone Astronauta Nexora expandido para exibir a logo completa de forma nítida) */}
-              <div className="absolute -bottom-6 -right-5 z-20 w-36 h-14 bg-gradient-to-tr from-purple-950 via-[#1C072B] to-pink-950 rounded-2xl flex items-center justify-center shadow-[0_4px_30px_rgba(236,72,153,0.45)] animate-bounce border border-white/20 cursor-pointer hover:scale-110 transition-transform p-1">
+              <div className="absolute -bottom-6 -right-5 z-20 w-40 h-16 bg-black rounded-2xl flex items-center justify-center shadow-[0_4px_30px_rgba(168,85,247,0.6)] animate-bounce border border-purple-500/40 cursor-pointer hover:scale-110 transition-transform overflow-hidden">
                 <img
                   src={nexoraLogoImg}
                   alt="Nexora Pulse"
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-contain p-1 drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]"
+                  className="w-full h-full object-contain drop-shadow-[0_0_16px_rgba(236,72,153,0.9)]"
                 />
               </div>
             </motion.div>
@@ -1101,12 +1101,12 @@ export default function NexoraLandingPage({ onAccessApp, addXP }: NexoraLandingP
             </div>
 
             <div className="bg-[#09090D] border border-white/5 rounded-3xl p-5 md:p-6 space-y-3">
-              <div className="w-32 h-12 bg-[#060608] border border-white/10 rounded-xl flex items-center justify-center p-2">
+              <div className="w-36 h-14 bg-black rounded-xl overflow-hidden flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.5)] border border-purple-500/30">
                 <img
                   src={nexoraLogoImg}
                   alt="Nexora Pulse"
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain drop-shadow-[0_0_12px_rgba(168,85,247,0.8)]"
                 />
               </div>
               <h4 className="text-sm font-black text-white uppercase tracking-wider">Dashboards Enterprise</h4>
