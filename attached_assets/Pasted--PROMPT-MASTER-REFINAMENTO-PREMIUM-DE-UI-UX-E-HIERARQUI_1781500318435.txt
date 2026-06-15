@@ -1,0 +1,313 @@
+# PROMPT MASTER — REFINAMENTO PREMIUM DE UI/UX E HIERARQUIA VISUAL DA NEXORA PULSE
+
+Atue como uma equipe composta por:
+
+* Senior Product Designer
+* UX Lead
+* UI Lead
+* Frontend Architect React
+* Especialista em Design Systems
+* Especialista em Conversão (CRO)
+* Especialista em SaaS Enterprise
+* Especialista em Landing Pages de Alta Conversão
+* Especialista em Acessibilidade (WCAG)
+* Especialista em Responsividade Mobile
+
+Sua missão é realizar uma auditoria visual completa e executar um refinamento profissional em toda a interface da plataforma Nexora Pulse e do site institucional.
+
+O objetivo não é criar novas funcionalidades.
+
+O objetivo é elevar a percepção de qualidade visual, organização, legibilidade e conversão.
+
+---
+
+# OBJETIVO PRINCIPAL
+
+Eliminar completamente:
+
+* Espaços vazios desnecessários
+* Quebras estranhas de layout
+* Textos desalinhados
+* Blocos desproporcionais
+* Elementos descentralizados
+* Hierarquia visual inconsistente
+
+Transformar a interface em um padrão SaaS Premium Enterprise.
+
+---
+
+# ETAPA 1 — CENTRALIZAÇÃO GLOBAL
+
+Auditar toda a aplicação.
+
+Garantir que:
+
+* Todos os títulos estejam corretamente alinhados
+* Todos os subtítulos estejam alinhados
+* Todos os textos institucionais estejam centralizados quando aplicável
+* Todos os blocos de conteúdo tenham alinhamento consistente
+
+Corrigir:
+
+* Elementos deslocados horizontalmente
+* Containers desalinhados
+* Textos fora da grade visual
+
+---
+
+# ETAPA 2 — AJUSTE DE PARÁGRAFOS
+
+Revisar todos os textos do site.
+
+Corrigir:
+
+* Linhas excessivamente longas
+* Parágrafos muito extensos
+* Espaçamentos irregulares
+* Quebras de linha inadequadas
+
+Aplicar:
+
+max-width otimizada para leitura
+
+Exemplo:
+
+* 650px a 900px para conteúdo textual
+* Centralização automática
+
+Meta:
+
+Melhorar legibilidade em desktop, tablet e mobile.
+
+---
+
+# ETAPA 3 — ELIMINAÇÃO DE ESPAÇOS VAGOS
+
+Identificar:
+
+* Áreas com excesso de padding
+* Áreas com excesso de margin
+* Seções com altura exagerada
+* Vazios visuais sem propósito
+
+Reduzir espaços mortos.
+
+Melhorar:
+
+* Densidade visual
+* Aproveitamento de tela
+* Fluxo de leitura
+
+---
+
+# ETAPA 4 — LOGO PRINCIPAL DO CABEÇALHO
+
+Aumentar proporcionalmente a logo principal.
+
+Objetivos:
+
+* Maior presença da marca
+* Melhor reconhecimento visual
+* Mais equilíbrio com o menu
+
+Aplicar:
+
+Desktop:
+
+* Altura entre 56px e 72px
+
+Tablet:
+
+* Altura entre 48px e 64px
+
+Mobile:
+
+* Altura entre 40px e 56px
+
+Garantir:
+
+* Não deformar imagem
+* Manter proporções originais
+* Melhor nitidez possível
+
+---
+
+# ETAPA 5 — HERO SECTION
+
+Localizar a seção principal do site.
+
+Texto atual:
+
+"Tecnologia, Criatividade e Resultados"
+
+Executar:
+
+## Inserção da Logo
+
+Adicionar a logo oficial da Nexora Pulse acima do título principal.
+
+Posicionamento:
+
+Logo
+↓
+Título Principal
+↓
+Subtítulo
+↓
+CTA
+
+Estrutura desejada:
+
+[LOGO CENTRALIZADA]
+
+Tecnologia, Criatividade e Resultados
+
+Texto de apoio
+
+Botões CTA
+
+---
+
+# ETAPA 6 — AJUSTE VISUAL DA LOGO HERO
+
+Configurar:
+
+Desktop:
+
+* largura entre 180px e 280px
+
+Tablet:
+
+* largura entre 150px e 220px
+
+Mobile:
+
+* largura entre 120px e 180px
+
+Aplicar:
+
+* animação suave de entrada
+* fade-in
+* leve efeito glow da identidade visual
+
+Sem exageros.
+
+---
+
+# ETAPA 7 — REVISÃO DA HIERARQUIA VISUAL
+
+Garantir consistência em:
+
+H1
+
+H2
+
+H3
+
+Parágrafos
+
+Botões
+
+Cards
+
+Métricas
+
+Badges
+
+Labels
+
+Criar escala visual única.
+
+---
+
+# ETAPA 8 — RESPONSIVIDADE PREMIUM
+
+Validar:
+
+320px
+375px
+414px
+768px
+1024px
+1440px
+1920px
+
+Nenhum elemento pode:
+
+* quebrar layout
+* sobrepor conteúdo
+* sair da tela
+* gerar scroll horizontal
+
+---
+
+# ETAPA 9 — MELHORIAS DE CONVERSÃO
+
+Otimizar:
+
+Hero Section
+
+Benefícios
+
+Recursos
+
+Planos
+
+Call To Actions
+
+Objetivo:
+
+Maior retenção visual.
+
+Maior percepção de valor.
+
+Maior conversão.
+
+---
+
+# ETAPA 10 — POLIMENTO FINAL
+
+Executar auditoria completa.
+
+Corrigir:
+
+* alinhamentos inconsistentes
+* tamanhos divergentes
+* espaçamentos desproporcionais
+* textos mal distribuídos
+* logos pequenas ou desalinhadas
+
+Garantir aparência:
+
+⭐⭐⭐⭐⭐ SaaS Enterprise Premium
+
+Referências:
+
+* Stripe
+* Notion
+* HubSpot
+* Monday
+* ClickUp
+* Linear
+* Vercel
+
+---
+
+# ENTREGA OBRIGATÓRIA
+
+Fornecer:
+
+1. Lista de todos os componentes ajustados.
+2. Lista dos problemas encontrados.
+3. Lista das correções aplicadas.
+4. Estrutura final de espaçamentos.
+5. Estrutura final da Hero Section.
+6. Estrutura final do Header.
+7. Melhorias de UX implementadas.
+8. Melhorias de conversão implementadas.
+9. Relatório visual antes/depois.
+10. Score final de qualidade visual da plataforma.
+
+META FINAL:
+
+Transformar a Nexora Pulse em uma interface SaaS premium com alinhamento perfeito, logo valorizada, textos centralizados, hierarquia visual consistente e experiência visual equivalente às melhores plataformas globais.

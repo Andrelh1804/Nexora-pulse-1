@@ -1,3 +1,4 @@
 - [Fase 1.5 Enterprise Architecture](fase15-enterprise.md) — DDD completo em src/lib/, src/contexts/, src/domains/, src/repositories/; vite.config.ts precisa ignorar .local/** para evitar reload loop.
 - [API Gateway Pattern](api-gateway.md) — server.ts usa /api/v1/ prefix, helmet, express-rate-limit, morgan; rota legada /api/gemini/agent mantida para compatibilidade.
 - [Fase 2 Foundation to Production](fase2-foundation.md) — PostgreSQL 12 tabelas, Auth JWT+RBAC, React Router, Login/Register pages, Zod v4 (.issues não .errors), stubs de integração (Stripe/Meta/Google/WhatsApp), 29 testes passando.
+- [Fase 2.5 UI/UX Refinamento Premium](fase25-uiux.md) — Hero logo hero PNG em public/; NexoraLogo header h-[52px] md:h-[60px]; LoginPage usa hero logo no painel esquerdo; AppLayout sidebar h-[72px]; logo também no footer e card Sobre Nós.

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Eye, EyeOff, Zap, Mail, Lock, ArrowRight, AlertCircle } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, ArrowRight, AlertCircle } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
+import NexoraLogo from "../components/NexoraLogo";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -40,11 +41,16 @@ export default function LoginPage() {
         <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-violet-500/10 rounded-full blur-3xl" />
 
         <div className="relative z-10 max-w-md text-center">
-          <div className="flex items-center justify-center gap-3 mb-10">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center shadow-lg shadow-purple-500/30">
-              <Zap className="w-6 h-6 text-white" />
+          <div className="flex items-center justify-center mb-10">
+            <div className="relative">
+              <div className="absolute inset-0 rounded-3xl bg-purple-600/25 blur-3xl scale-150 pointer-events-none" />
+              <img
+                src="/nexora_pulse_logo_hero.png"
+                alt="Nexora Pulse"
+                className="relative w-[200px] md:w-[240px] h-auto object-contain"
+                style={{ filter: "drop-shadow(0 0 32px rgba(168,85,247,0.7)) drop-shadow(0 0 12px rgba(236,72,153,0.4))" }}
+              />
             </div>
-            <span className="text-2xl font-bold text-white tracking-tight">Nexora Pulse</span>
           </div>
 
           <h2 className="text-4xl font-bold text-white mb-4 leading-tight">
@@ -76,11 +82,8 @@ export default function LoginPage() {
       <div className="flex-1 flex items-center justify-center p-6 lg:p-12">
         <div className="w-full max-w-md">
           {/* Mobile logo */}
-          <div className="flex items-center gap-3 mb-10 lg:hidden">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center">
-              <Zap className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-bold text-white">Nexora Pulse</span>
+          <div className="flex items-center justify-center mb-8 lg:hidden">
+            <NexoraLogo size="header" />
           </div>
 
           <div className="mb-8">

@@ -311,21 +311,41 @@ export default function NexoraLandingPage({ onAccessApp, addXP }: NexoraLandingP
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
           
           {/* Left Column Text Content */}
-          <div className="lg:col-span-6 space-y-6 text-left" id="hero-left-col">
-            
+          <div className="lg:col-span-6 space-y-7 text-left" id="hero-left-col">
+
+            {/* Hero Logo — new brand mark above title */}
+            <motion.div
+              initial={{ opacity: 0, y: -16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="relative inline-block"
+              id="hero-brand-logo"
+            >
+              <div className="absolute inset-0 rounded-2xl bg-purple-600/20 blur-2xl scale-110 pointer-events-none" />
+              <img
+                src="/nexora_pulse_logo_hero.png"
+                alt="Nexora Pulse"
+                className="relative w-[140px] sm:w-[180px] md:w-[220px] h-auto object-contain drop-shadow-[0_0_32px_rgba(168,85,247,0.7)]"
+                style={{ filter: "drop-shadow(0 0 24px rgba(168,85,247,0.6)) drop-shadow(0 0 8px rgba(236,72,153,0.4))" }}
+              />
+            </motion.div>
+
             {/* Tagline Badge */}
-            <div className="inline-flex items-center gap-2 bg-[#12081f] border border-purple-500/30 rounded-full px-4.5 py-1.5 text-[10px] md:text-xs font-bold uppercase tracking-widest text-[#EC4899] shadow-[0_0_15px_rgba(236,72,153,0.15)] animate-pulse">
-              <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-              <span>TECNOLOGIA • CRIATIVIDADE • RESULTADOS</span>
+            <div className="inline-flex items-center gap-2 bg-[#12081f] border border-purple-500/30 rounded-full px-4 py-1.5 text-[10px] md:text-xs font-bold uppercase tracking-widest text-[#EC4899] shadow-[0_0_15px_rgba(236,72,153,0.15)]">
+              <Sparkles className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+              <span>Tecnologia • Criatividade • Resultados</span>
             </div>
 
             {/* Display Headline */}
-            <h1 className="text-4xl sm:text-5xl xl:text-6xl font-black text-white tracking-tight leading-[1.1] font-sans">
-              Soluções digitais com foco em <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 drop-shadow-[0_2px_15px_rgba(236,72,153,0.2)]">resultados reais.</span>
+            <h1 className="text-4xl sm:text-5xl xl:text-[3.75rem] font-black text-white tracking-tight leading-[1.08] font-sans max-w-2xl">
+              Soluções digitais com foco em{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600">
+                resultados reais.
+              </span>
             </h1>
 
             {/* Subheadline */}
-            <p className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-xl font-light">
+            <p className="text-sm sm:text-[0.9375rem] text-slate-400 leading-[1.75] max-w-lg font-light">
               Transformamos tecnologia, inteligência artificial e automação em crescimento escalável para empresas modernas.
             </p>
 
@@ -473,8 +493,8 @@ export default function NexoraLandingPage({ onAccessApp, addXP }: NexoraLandingP
                 </div>
               </div>
 
-              {/* Botão overlay flutuante (ícone Astronauta Nexora expandido para exibir a logo completa de forma nítida) */}
-              <div className="absolute -bottom-6 -right-5 z-20 w-40 h-16 bg-black rounded-2xl flex items-center justify-center shadow-[0_4px_30px_rgba(168,85,247,0.6)] animate-bounce border border-purple-500/40 cursor-pointer hover:scale-110 transition-transform overflow-hidden">
+              {/* Botão overlay flutuante — logo Nexora */}
+              <div className="absolute -bottom-6 -right-5 z-20 w-40 h-16 bg-black rounded-2xl flex items-center justify-center shadow-[0_4px_30px_rgba(168,85,247,0.6)] border border-purple-500/40 cursor-pointer hover:scale-105 transition-transform duration-300 overflow-hidden">
                 <img
                   src={nexoraLogoImg}
                   alt="Nexora Pulse"
@@ -1101,12 +1121,12 @@ export default function NexoraLandingPage({ onAccessApp, addXP }: NexoraLandingP
             </div>
 
             <div className="bg-[#09090D] border border-white/5 rounded-3xl p-5 md:p-6 space-y-3">
-              <div className="w-36 h-14 bg-black rounded-xl overflow-hidden flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.5)] border border-purple-500/30">
+              <div className="w-40 h-14 bg-black rounded-xl overflow-hidden flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.5)] border border-purple-500/30">
                 <img
-                  src={nexoraLogoImg}
+                  src="/nexora_pulse_logo_hero.png"
                   alt="Nexora Pulse"
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-contain drop-shadow-[0_0_12px_rgba(168,85,247,0.8)]"
+                  className="w-full h-full object-contain"
+                  style={{ filter: "drop-shadow(0 0 12px rgba(168,85,247,0.8))" }}
                 />
               </div>
               <h4 className="text-sm font-black text-white uppercase tracking-wider">Dashboards Enterprise</h4>
@@ -1607,9 +1627,17 @@ export default function NexoraLandingPage({ onAccessApp, addXP }: NexoraLandingP
       <footer className="bg-[#020202] border-t border-white/5 py-12 md:py-16 px-6 md:px-12 xl:px-24 text-left z-10 relative">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10">
           
-          <div className="md:col-span-4 space-y-4">
-            <NexoraLogo showText={false} size="sm" />
-            <p className="text-xs text-slate-500 leading-relaxed font-light font-sans">
+          <div className="md:col-span-4 space-y-5">
+            <div className="relative inline-block">
+              <div className="absolute inset-0 rounded-2xl bg-purple-600/15 blur-2xl scale-110 pointer-events-none" />
+              <img
+                src="/nexora_pulse_logo_hero.png"
+                alt="Nexora Pulse"
+                className="relative w-[160px] h-auto object-contain"
+                style={{ filter: "drop-shadow(0 0 20px rgba(168,85,247,0.5))" }}
+              />
+            </div>
+            <p className="text-xs text-slate-500 leading-relaxed font-light font-sans max-w-[280px]">
               Transformando tráfego pago, inteligência artificial e automações omnichannel de alta conversão em escala e crescimento real para operações corporativas modernas.
             </p>
           </div>

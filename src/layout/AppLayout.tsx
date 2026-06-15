@@ -60,10 +60,10 @@ export default function AppLayout() {
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
       {/* Logo */}
-      <div className={`h-16 flex items-center border-b border-white/5 shrink-0 ${collapsed ? "px-3 justify-center" : "px-4 gap-3"}`}>
-        {!collapsed && <NexoraLogo size="sm" />}
+      <div className={`h-[72px] flex items-center border-b border-white/5 shrink-0 ${collapsed ? "px-3 justify-center" : "px-4"}`}>
+        {!collapsed && <NexoraLogo size="header" />}
         {collapsed && (
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-white font-black text-sm">N</div>
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-white font-black text-sm shadow-[0_0_12px_rgba(168,85,247,0.5)]">N</div>
         )}
       </div>
 

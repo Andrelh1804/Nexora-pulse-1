@@ -28,7 +28,7 @@ export default function NexoraLogo({
     md: "h-40 md:h-48",
     lg: "h-64 md:h-72",
     xl: "h-80 md:h-[420px]",
-    header: "h-12",
+    header: "h-[52px] md:h-[60px]",
     dashboard: "h-80 md:h-[380px]"
   };
 
@@ -46,7 +46,7 @@ export default function NexoraLogo({
             src={nexoraLogoImg}
             alt="Nexora Pulse"
             referrerPolicy="no-referrer"
-            className="h-12 w-auto object-contain drop-shadow-[0_0_18px_rgba(168,85,247,0.9)] hover:drop-shadow-[0_0_28px_rgba(236,72,153,1)] transition-all duration-300 hover:scale-105"
+            className="h-[52px] md:h-[60px] w-auto object-contain drop-shadow-[0_0_18px_rgba(168,85,247,0.9)] hover:drop-shadow-[0_0_28px_rgba(236,72,153,1)] transition-all duration-300 hover:scale-105"
           />
         </motion.div>
       </div>
