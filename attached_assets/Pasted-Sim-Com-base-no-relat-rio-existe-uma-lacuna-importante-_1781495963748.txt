@@ -1,0 +1,332 @@
+Sim. Com base no relatório, existe uma lacuna importante entre a Fase 1 (protótipo) e a Fase 2 (produção).
+
+Recomendo adicionar uma etapa intermediária chamada:
+
+# FASE 1.5 — ENTERPRISE FOUNDATION & CORE PLATFORM
+
+Esta fase cria a fundação definitiva da Nexora Pulse para evitar retrabalho durante a implementação das integrações reais.
+
+Adicione o seguinte bloco ao prompt:
+
+# FASE 1.5 — ENTERPRISE FOUNDATION & CORE PLATFORM
+
+## OBJETIVO
+
+Preparar a arquitetura da Nexora Pulse para suportar:
+
+* Multi-Tenant Enterprise
+* Escalabilidade SaaS
+* Billing
+* IA Contextual
+* APIs Externas
+* White Label
+* Marketplace Futuro
+
+Sem gerar dívida técnica.
+
+---
+
+# ETAPA 1 — DOMAIN DRIVEN DESIGN (DDD)
+
+Mapear todos os domínios da plataforma.
+
+Criar bounded contexts:
+
+### Core SaaS
+
+* Auth
+* Billing
+* Tenants
+* Permissions
+
+### Marketing Hub
+
+* Social Media
+* Ads
+* Analytics
+
+### CRM Hub
+
+* Leads
+* WhatsApp
+* Pipelines
+
+### AI Hub
+
+* Agentes
+* RAG
+* Memória
+* Prompts
+
+### Automation Hub
+
+* Workflows
+* Triggers
+* Actions
+
+### Content Hub
+
+* Design Studio
+* Sites Builder
+* Media Assets
+
+---
+
+# ETAPA 2 — MULTI-TENANCY ENTERPRISE
+
+Implementar arquitetura completa.
+
+Cada cliente deve possuir:
+
+* Dados isolados
+* Configurações isoladas
+* IA isolada
+* Billing isolado
+* Métricas isoladas
+
+Criar:
+
+Tenant Context Engine.
+
+---
+
+# ETAPA 3 — FEATURE FLAGS
+
+Criar sistema de ativação modular.
+
+Cada plano poderá ativar:
+
+* IA
+* CRM
+* WhatsApp
+* Analytics
+* Sites
+* Design Studio
+* Automação
+
+Sem necessidade de deploy.
+
+---
+
+# ETAPA 4 — MODULE GATEWAY
+
+Criar núcleo central da plataforma.
+
+Responsável por:
+
+* Controle de módulos
+* Controle de permissões
+* Controle de licenças
+* Controle de limites
+
+---
+
+# ETAPA 5 — AUDITORIA CORPORATIVA
+
+Implementar:
+
+Audit Logs Enterprise
+
+Registrar:
+
+* Login
+* Logout
+* Criação
+* Exclusão
+* Edição
+* Integrações
+* Cobranças
+
+Tudo persistido.
+
+---
+
+# ETAPA 6 — EVENT BUS
+
+Criar arquitetura orientada a eventos.
+
+Eventos:
+
+UserCreated
+
+TenantCreated
+
+SubscriptionActivated
+
+LeadCreated
+
+CampaignCreated
+
+WorkflowExecuted
+
+MessageReceived
+
+AIInteractionCreated
+
+---
+
+# ETAPA 7 — FILE STORAGE
+
+Implementar armazenamento corporativo.
+
+Criar buckets:
+
+avatars
+
+campaign-assets
+
+generated-images
+
+creative-files
+
+documents
+
+exports
+
+backups
+
+---
+
+# ETAPA 8 — API GATEWAY
+
+Padronizar todas as APIs.
+
+Implementar:
+
+* Versionamento
+* Middleware
+* Logs
+* Segurança
+* Rate Limiting
+
+Padrão:
+
+/api/v1/
+
+---
+
+# ETAPA 9 — SISTEMA DE NOTIFICAÇÕES
+
+Criar motor central.
+
+Tipos:
+
+* In-App
+* E-mail
+* WhatsApp
+* Push
+
+---
+
+# ETAPA 10 — SISTEMA DE FILAS
+
+Implementar processamento assíncrono.
+
+Filas:
+
+* IA
+* WhatsApp
+* Integrações
+* Relatórios
+* Exportações
+
+Utilizar:
+
+BullMQ + Redis
+
+---
+
+# ETAPA 11 — DATA LAYER
+
+Criar camada de abstração.
+
+Separar:
+
+* Repository Layer
+* Service Layer
+* Domain Layer
+
+Eliminar acesso direto ao banco.
+
+---
+
+# ETAPA 12 — OBSERVABILIDADE AVANÇADA
+
+Implementar:
+
+* Logs Estruturados
+* Tracing
+* Monitoring
+* Error Tracking
+* Performance Metrics
+
+---
+
+# ETAPA 13 — PREPARAÇÃO WHITE LABEL
+
+Estruturar:
+
+* Temas
+* Logos
+* Domínios
+* Configurações
+
+Por tenant.
+
+---
+
+# ETAPA 14 — MARKETPLACE FOUNDATION
+
+Preparar arquitetura para:
+
+* Templates
+* Workflows
+* Prompts
+* Landing Pages
+* Agentes IA
+
+Marketplace futuro.
+
+---
+
+# ETAPA 15 — TECH DEBT ELIMINATION
+
+Eliminar:
+
+* App.tsx monolítico
+* Estados globais inseguros
+* Dados mockados
+* Código duplicado
+* Dependências obsoletas
+
+Meta:
+
+Arquitetura limpa e modular.
+
+---
+
+# RESULTADO ESPERADO
+
+Ao final desta fase a Nexora Pulse deverá possuir:
+
+✅ Arquitetura SaaS Enterprise
+
+✅ Multi-Tenant real
+
+✅ Billing Ready
+
+✅ IA Ready
+
+✅ API Ready
+
+✅ Marketplace Ready
+
+✅ White Label Ready
+
+✅ Escalável para mais de 10.000 clientes
+
+Classificação esperada:
+
+🟡 RELEASE CANDIDATE FOUNDATION
+
+Essa adição reduz significativamente o risco de retrabalho quando forem implementadas as integrações Meta Ads, Google Ads, Evolution API, Stripe, RAG, White Label e Marketplace nas próximas fases. Ela transforma a Nexora Pulse de um conjunto de módulos para uma plataforma SaaS enterprise escalável.

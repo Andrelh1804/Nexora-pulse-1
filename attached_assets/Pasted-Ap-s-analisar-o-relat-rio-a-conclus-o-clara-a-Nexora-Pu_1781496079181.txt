@@ -1,0 +1,363 @@
+Após analisar o relatório, a conclusão é clara: a **Nexora Pulse não precisa mais de novas telas ou novos módulos**. O gargalo agora está na transformação do protótipo avançado em um SaaS operacional.
+
+A próxima fase deve ser chamada:
+
+# FASE 2 — FOUNDATION TO PRODUCTION
+
+**(Transformação de Protótipo Inteligente em Plataforma SaaS Comercial)**
+
+O prompt abaixo foi elaborado para conduzir a próxima etapa do desenvolvimento.
+
+# PROMPT MASTER — FASE 2: IMPLEMENTAÇÃO REAL DA NEXORA PULSE
+
+Atue como um Comitê Executivo Enterprise composto por:
+
+* CTO
+* Principal Software Architect
+* Tech Lead Full Stack
+* Especialista PostgreSQL
+* Especialista Supabase
+* Especialista Stripe Billing
+* Especialista Meta Ads API
+* Especialista Google Ads API
+* Especialista Evolution API
+* Especialista IA Generativa
+* Especialista DevOps
+* Especialista Cyber Security OWASP
+* Especialista LGPD
+* QA Lead
+
+Sua missão é assumir a continuidade do projeto Nexora Pulse com base no relatório executivo existente.
+
+O objetivo não é criar novas funcionalidades visuais.
+
+O objetivo é transformar os 52% já desenvolvidos em um produto SaaS pronto para produção.
+
+---
+
+# CONTEXTO ATUAL
+
+Status Global:
+
+* UI/UX: 80%
+* Backend: 20%
+* Banco de Dados: 0%
+* Segurança: 20%
+* Testes: 0%
+* Integrações Reais: 10%
+
+Classificação:
+
+🟠 BETA
+
+Objetivo:
+
+🟢 RELEASE CANDIDATE
+
+---
+
+# MISSÃO PRINCIPAL
+
+Implementar toda a infraestrutura real necessária para operação comercial da plataforma.
+
+---
+
+# FASE 2.1 — REFATORAÇÃO ARQUITETURAL
+
+Executar:
+
+* Refatoração completa do App.tsx
+* Separação por módulos
+* React Context
+* Custom Hooks
+* React Router
+* Lazy Loading
+* Code Splitting
+
+Entregar:
+
+Estrutura completa de pastas.
+
+Mapa de componentes.
+
+Mapa de dependências.
+
+---
+
+# FASE 2.2 — BANCO DE DADOS
+
+Projetar e implementar:
+
+PostgreSQL Enterprise
+
+Tabelas:
+
+* tenants
+* users
+* subscriptions
+* plans
+* campaigns
+* leads
+* social_posts
+* workflows
+* audit_logs
+* notifications
+* ai_interactions
+* media_assets
+
+Criar:
+
+* migrations
+* indexes
+* constraints
+* triggers
+* RLS
+* backups
+
+Entregar:
+
+Schema SQL completo.
+
+---
+
+# FASE 2.3 — AUTENTICAÇÃO ENTERPRISE
+
+Implementar:
+
+* Login
+* Cadastro
+* Logout
+* Refresh Token
+* MFA
+* Recuperação de Senha
+* Sessão Persistente
+
+Criar:
+
+RBAC completo:
+
+* Super Admin
+* Agency Owner
+* Manager
+* Analyst
+* Client
+
+Implementar middleware backend.
+
+---
+
+# FASE 2.4 — BILLING E ASSINATURAS
+
+Integrar Stripe:
+
+* Checkout
+* Trial
+* Upgrade
+* Downgrade
+* Cancelamento
+* Portal do Cliente
+
+Criar:
+
+* Controle de limites por plano
+* Bloqueio automático por inadimplência
+* Controle de consumo IA
+
+---
+
+# FASE 2.5 — META ADS REAL
+
+Implementar:
+
+Meta Marketing API
+
+Recursos:
+
+* Campanhas
+* Conjuntos
+* Anúncios
+* Insights
+* Públicos
+* Pixel
+* Conversões
+
+Eliminar dados mockados.
+
+Todos os KPIs devem vir da API real.
+
+---
+
+# FASE 2.6 — GOOGLE ADS REAL
+
+Implementar:
+
+* Campanhas
+* Conversões
+* Keywords
+* CTR
+* CPC
+* CPA
+* ROAS
+
+Criar sincronização automática.
+
+---
+
+# FASE 2.7 — WHATSAPP ENTERPRISE
+
+Implementar Evolution API.
+
+Criar:
+
+* Instâncias
+* QR Code
+* Webhooks
+* Atendimento
+* Chatbot
+* Histórico
+
+Persistir todas as mensagens.
+
+---
+
+# FASE 2.8 — IA DE PRODUÇÃO
+
+Evoluir sistema atual.
+
+Implementar:
+
+* RAG Multi-Tenant
+* Vetorização
+* Embeddings
+* Memória Contextual
+* Histórico Persistente
+* Gemini Vision
+* Geração de Imagens
+
+Criar:
+
+Central AI Orchestrator.
+
+---
+
+# FASE 2.9 — SEGURANÇA
+
+Corrigir todos os riscos críticos.
+
+Implementar:
+
+* Helmet
+* Rate Limit
+* Zod
+* Auditoria
+* Logs
+* Monitoramento
+
+Executar:
+
+OWASP Top 10 completo.
+
+Meta:
+
+0 vulnerabilidades críticas.
+
+---
+
+# FASE 2.10 — OBSERVABILIDADE
+
+Implementar:
+
+* Sentry
+* Logs Estruturados
+* Alertas
+* Health Checks
+* Métricas
+
+Criar:
+
+Painel operacional interno.
+
+---
+
+# FASE 2.11 — TESTES
+
+Implementar:
+
+Vitest
+
+Playwright
+
+Testing Library
+
+Cobertura mínima:
+
+80%
+
+---
+
+# FASE 2.12 — DEVOPS
+
+Criar:
+
+Pipeline CI/CD completo
+
+Fluxo:
+
+GitHub
+↓
+Testes
+↓
+Build
+↓
+Deploy
+↓
+Monitoramento
+
+Automatizar todo ciclo.
+
+---
+
+# FASE 2.13 — GO LIVE
+
+Gerar checklist completo.
+
+Validar:
+
+□ Segurança
+□ Billing
+□ Banco
+□ APIs
+□ IA
+□ WhatsApp
+□ Backup
+□ LGPD
+□ Monitoramento
+
+---
+
+# ENTREGA OBRIGATÓRIA
+
+Gerar:
+
+1. Plano de Execução Técnico.
+2. Arquitetura Atualizada.
+3. Estrutura de Banco.
+4. Plano de Migração.
+5. Plano de Segurança.
+6. Plano de Escalabilidade.
+7. Backlog Priorizado.
+8. Roadmap de 8 Semanas.
+9. Cronograma Sprint por Sprint.
+10. Relatório Final de Prontidão para Produção.
+
+IMPORTANTE:
+
+Nenhuma funcionalidade deve permanecer simulada.
+
+Todo recurso atualmente baseado em mock data deve ser convertido para integração real e persistência real.
+
+Objetivo final:
+
+Transformar a Nexora Pulse de um protótipo Beta (52%) para uma plataforma SaaS comercial pronta para operação em produção.
+
+Com base no relatório, eu ainda acrescentaria uma **Fase 2.0 anterior**, focada exclusivamente em **Banco de Dados + Autenticação + RBAC + Stripe**, porque esses quatro pilares destravam praticamente todos os outros módulos. Sem eles, integrar Meta, Google, WhatsApp e IA avançada gerará retrabalho arquitetural.

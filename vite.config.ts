@@ -1,7 +1,7 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import {defineConfig} from 'vite';
+import { defineConfig } from 'vite';
 
 export default defineConfig(() => {
   return {
@@ -14,9 +14,16 @@ export default defineConfig(() => {
     server: {
       host: '0.0.0.0',
       port: 5000,
-      allowedHosts: true,
+      allowedHosts: true as true,
       hmr: process.env.DISABLE_HMR !== 'true',
-      watch: process.env.DISABLE_HMR === 'true' ? null : {},
+      watch: {
+        ignored: [
+          '**/.local/**',
+          '**/.cache/**',
+          '**/node_modules/**',
+          '**/.git/**',
+        ],
+      },
     },
   };
 });

@@ -1,0 +1,2 @@
+- [Fase 1.5 Enterprise Architecture](fase15-enterprise.md) — DDD completo implementado em src/lib/, src/contexts/, src/domains/, src/repositories/; vite.config.ts precisa ignorar .local/** para evitar reload loop.
+- [API Gateway Pattern](api-gateway.md) — server.ts usa /api/v1/ prefix, helmet, express-rate-limit, morgan; rota legada /api/gemini/agent mantida para compatibilidade.
