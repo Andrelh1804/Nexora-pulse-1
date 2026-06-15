@@ -1,7 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
-import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
@@ -13,13 +12,13 @@ import tenantRoutes from "./src/routes/tenants.routes";
 import observabilityRoutes from "./src/routes/observability.routes";
 import billingRoutes from "./src/routes/billing.routes";
 import socialRoutes from "./src/routes/social.routes";
+import aiRoutes from "./src/routes/ai.routes";
 import { checkConnection } from "./src/lib/db";
-import { saveInteraction, getMemoryContext, getUsageStats } from "./src/services/ai-memory.service";
-import { authenticate, AuthRequest } from "./src/middleware/auth.middleware";
 
 dotenv.config();
 
 const app = express();
+app.set("trust proxy", 1);
 const PORT = 5000;
 const API_VERSION = "v1";
 const API_PREFIX = `/api/${API_VERSION}`;
@@ -105,26 +104,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // ──────────────────────────────────────────────
-// GOOGLE GEMINI AI INIT
-// ──────────────────────────────────────────────
-let ai: GoogleGenAI | null = null;
-const apiKey = process.env.GEMINI_API_KEY;
-
-if (apiKey) {
-  try {
-    ai = new GoogleGenAI({
-      apiKey,
-      httpOptions: { headers: { "User-Agent": "aistudio-build" } },
-    });
-    console.log("[Nexora API] Gemini AI initialized ✓");
-  } catch (err) {
-    console.error("[Nexora API] Error initializing Gemini:", err);
-  }
-} else {
-  console.warn("[Nexora API] GEMINI_API_KEY not set — running in simulation mode.");
-}
-
-// ──────────────────────────────────────────────
 // API v1 ROUTER
 // ──────────────────────────────────────────────
 const router = express.Router();
@@ -150,12 +129,8 @@ router.use("/billing", billingRoutes);
 // ── SOCIAL ROUTES ─────────────────────────────
 router.use("/social", socialRoutes);
 
-// ── AI USAGE ──────────────────────────────────
-router.get("/ai/usage", authenticate, async (req: Request, res: Response) => {
-  const authReq = req as AuthRequest;
-  const stats = await getUsageStats(authReq.user!.tenantId);
-  return res.json(stats);
-});
+// ── AI ROUTES (quota + history + agent) ───────
+router.use("/ai", aiRoutes);
 
 // ── HEALTH CHECK ─────────────────────────────
 router.get("/health", async (_req: Request, res: Response) => {
@@ -169,7 +144,7 @@ router.get("/health", async (_req: Request, res: Response) => {
     environment: process.env.NODE_ENV ?? "development",
     services: {
       database: dbOk ? "connected" : "disconnected",
-      ai: !!ai ? "gemini-2.5-flash" : "simulation",
+      ai: !!process.env.GEMINI_API_KEY ? "gemini-2.5-flash" : "simulation",
     },
     features: {
       auth: true,
@@ -193,83 +168,6 @@ router.get("/status", (_req: Request, res: Response) => {
     nodeVersion: process.version,
     timestamp: new Date().toISOString(),
   });
-});
-
-// ── AI AGENTS ENDPOINT  /api/v1/ai/agent ─────
-router.post("/ai/agent", async (req: Request, res: Response) => {
-  const { agentType, tenantName, tenantData, userInput } = req.body;
-
-  if (!agentType || !tenantName) {
-    return res.status(400).json({
-      error: "Parâmetros obrigatórios ausentes: agentType ou tenantName",
-      code: "MISSING_PARAMS",
-    });
-  }
-
-  const validAgents = ["social_media", "copywriter", "analyst", "traffic_manager", "general"];
-  if (!validAgents.includes(agentType)) {
-    return res.status(400).json({ error: `Tipo de agente inválido: ${agentType}`, code: "INVALID_AGENT_TYPE" });
-  }
-
-  const tenantId = req.headers["x-tenant-id"] as string ?? "unknown";
-  const memoryCtx = await getMemoryContext(tenantId, agentType, 3);
-  const memoryNote = memoryCtx.recentInteractions.length > 0
-    ? `\n\n[Contexto histórico — últimas ${memoryCtx.recentInteractions.length} interações deste agente com este cliente]\n` +
-      memoryCtx.recentInteractions.map((i, n) => `${n + 1}. Usuário perguntou: "${i.prompt.slice(0, 120)}..."`).join("\n")
-    : "";
-
-  const systemInstruction = buildSystemInstruction(agentType, tenantName, tenantData) + memoryNote;
-  const prompt = userInput ?? "Gere uma sugestão estratégica para otimizar meus resultados este mês.";
-  const startTime = Date.now();
-
-  try {
-    if (ai) {
-      const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: prompt,
-        config: { systemInstruction, temperature: 0.75 },
-      });
-      const text = response.text ?? "O agente não conseguiu formular uma resposta no momento.";
-      const processingMs = Date.now() - startTime;
-
-      await saveInteraction({
-        tenantId, agentType, prompt,
-        response: text,
-        model: "gemini-2.5-flash",
-        processingMs,
-        isSimulated: false,
-        status: "success",
-      });
-
-      return res.json({ result: text, agentType, model: "gemini-2.5-flash", timestamp: new Date().toISOString() });
-    } else {
-      const simulated = buildSimulatedResponse(agentType, tenantName, tenantData, userInput);
-      await saveInteraction({
-        tenantId, agentType, prompt,
-        response: simulated.result,
-        processingMs: Date.now() - startTime,
-        isSimulated: true,
-        status: "success",
-      });
-      return res.json(simulated);
-    }
-  } catch (error: unknown) {
-    console.error("[Nexora API] AI call failed:", error);
-    const simulated = buildSimulatedResponse(agentType, tenantName, tenantData, userInput);
-    await saveInteraction({
-      tenantId, agentType, prompt,
-      response: simulated.result,
-      processingMs: Date.now() - startTime,
-      isSimulated: true,
-      status: "failed",
-      metadata: { error: error instanceof Error ? error.message : "unknown" },
-    });
-    return res.status(200).json({
-      ...simulated,
-      fallback: true,
-      error: error instanceof Error ? error.message : "AI service temporarily unavailable",
-    });
-  }
 });
 
 // ── LEGACY TENANTS LIST ───────────────────────
@@ -314,11 +212,6 @@ router.use((_req: Request, res: Response) => {
 app.use(API_PREFIX, router);
 
 // ── LEGACY COMPAT ─────────────────────────────
-app.post("/api/gemini/agent", async (req: Request, res: Response) => {
-  req.url = `${API_PREFIX}/ai/agent`;
-  app._router.handle(req, res, () => {});
-});
-
 app.get("/api/health", (_req: Request, res: Response) => {
   res.json({ status: "ok", time: new Date().toISOString(), version: API_VERSION });
 });
@@ -334,52 +227,6 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
     message: process.env.NODE_ENV !== "production" ? err.message : "Contate o suporte.",
   });
 });
-
-// ──────────────────────────────────────────────
-// HELPERS
-// ──────────────────────────────────────────────
-function buildSystemInstruction(agentType: string, tenantName: string, tenantData: Record<string, unknown>): string {
-  const ctx = JSON.stringify(tenantData ?? {});
-  if (agentType === "social_media") {
-    return `Você é o Agente Social Media sênior da Nexora Pulse, especialista em tráfego orgânico, Instagram, Reels, TikTok, hashtags estratégicas e SEO social. Sua missão é gerar conteúdo altamente viral e focado em engajamento. Seu cliente atual é: "${tenantName}". Dados: ${ctx}. Responda em Markdown rico em português do Brasil.`;
-  }
-  if (agentType === "copywriter") {
-    return `Você é o Agente Copywriter de alta conversão da Nexora Pulse, expert em AIDA, PAS, Meta/Google/TikTok Ads. Cliente: "${tenantName}". Dados: ${ctx}. Copies impactantes em Markdown em português.`;
-  }
-  if (agentType === "analyst") {
-    return `Você é o Agente Analista de Inteligência da Nexora Pulse. Cliente: "${tenantName}". Dados: ${ctx}. Diagnóstico realista e ultra profissional em Markdown em português. Aponte 3 tendências de mercado.`;
-  }
-  if (agentType === "traffic_manager") {
-    return `Você é o Agente Gestor de Tráfego Enterprise da Nexora Pulse. Cliente: "${tenantName}". Dados: ${ctx}. Recomende distribuição de verba entre Meta/Google/TikTok em Markdown em português.`;
-  }
-  return `Você é um Agente de Marketing Autônomo da Nexora Pulse. Cliente: ${tenantName}. Responda em português.`;
-}
-
-function buildSimulatedResponse(agentType: string, tenantName: string, tenantData: Record<string, unknown>, userInput?: string) {
-  const followers = tenantData?.followers ?? "12.4k";
-  const roas = tenantData?.roas ?? "3.8x";
-  const leads = tenantData?.leads ?? "1,240";
-  const conversionRate = tenantData?.conversionRate ?? "2.4%";
-  void userInput;
-
-  let result = "";
-  if (agentType === "social_media") {
-    result = `### ⚡ Nexora Pulse — Plano de Conteúdo Orgânico para **${tenantName}**\n\nCom base nos seus **${followers} seguidores**:\n\n1. **Reels Viral** — Gancho: "O segredo que seu mercado esconde para faturar mais..."\n   - CTA: "Comente 'PULSE' e receba o passo a passo no Direct!"\n2. **Carrossel Educacional** — Aumentar conversão de ${conversionRate} do seu público.\n3. **Story Interativo** — Use enquete + link na bio com chatbot ativo.\n\n*SEO Social*: Use palavras-chave "automação de vendas" e "growth hacking" nas legendas.`;
-  } else if (agentType === "copywriter") {
-    result = `### ✍️ Copy de Alta Performance — **${tenantName}**\n\n**Opção A (PAS)**\n- Título: Cansado de queimar verba em anúncios que não vendem?\n- Texto: Enquanto você gerencia manualmente, concorrentes usam IA preditiva...\n- CTA: [Saiba Mais] — Inicie suas automações hoje!\n\n**Opção B (AIDA)**\n- Título: Como escalamos para ROAS de **${roas}** com IA?\n- CTA: [Quero Escalar Meu Negócio]`;
-  } else if (agentType === "analyst") {
-    result = `### 📊 Relatório de Inteligência — **${tenantName}**\n\n- **Conversão**: ${conversionRate} (meta: 3.5%)\n- **Leads ativos**: ${leads}\n- **ROAS**: ${roas}\n\n**3 Tendências Críticas:**\n1. Vídeos Lo-Fi e Bastidores (+23% retenção no Reels)\n2. Chatbots híbridos: resposta <1min → +40% agendamentos\n3. Hiper-segmentação Meta Ads → -18% CAC`;
-  } else {
-    result = `### 🎯 Alocação de Orçamento — **${tenantName}**\n\nROAS atual: **${roas}**\n\n- **Meta Ads**: 50% — Conversão direta + WhatsApp\n- **Google Ads**: 35% — Captura de intenção de compra\n- **TikTok Ads**: 15% — Branding + topo de funil\n\n*Active Conversion API* para reter eventos iOS 14+.`;
-  }
-
-  return {
-    result,
-    agentType,
-    note: "Resposta gerada via motor de simulação analítica Nexora Pulse (Modo Demonstration Autônomo).",
-    timestamp: new Date().toISOString(),
-  };
-}
 
 function getFeaturesByPlan(plan: string): Record<string, boolean> {
   const base = { social_media: true, marketplace: true };
